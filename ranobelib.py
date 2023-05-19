@@ -12,6 +12,7 @@ import spacy
 import pickle
 
 #python -m spacy download ru_core_news_sm
+
 ru_nlp = spacy.load('ru_core_news_sm')
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
@@ -56,6 +57,7 @@ for i in range(1):
         file.write('\n'.join(text_with_line_breaks))
         print(f'Текст главы {chapter_number} сохранен в файл {output_file_name}.txt')
         chapter_number += 1
+        
 #STRESSED
 
     def load():
@@ -220,6 +222,7 @@ for i in range(1):
    # print(f'Текст главы {chapter_number-1} сохранен в файл {output_file_name}.fb2')
 
 #CONVERT MODE
+
     with open("final.txt", "r", encoding="utf-8") as f:
         text = f.read()
     text = re.sub("([аеиоуыэюя])(́)", r"\1+", text)
@@ -255,6 +258,7 @@ for i in range(1):
 
 
 #VOICE BLOCK
+
     device = torch.device('cpu')
     torch.set_num_threads(4)
     local_file = 'model.pt'
@@ -312,15 +316,10 @@ for i in range(1):
 
     # объединение аудиофайлов в один
     if len(audio_files) > 0:
-        # Определяем параметры первого аудиофайла
         with wave.open(audio_files[0], 'rb') as first_file:
             params = first_file.getparams()
-
-        # Создаем новый аудиофайл для объединения
         with wave.open(f'Глава{chapter_number - 1}_соединенный.wav', 'wb') as output_file:
             output_file.setparams(params)
-
-            # Записываем данные из каждого файла в новый аудиофайл
             for audio_file in audio_files:
                 try:
                     with wave.open(audio_file, 'rb') as audio:
