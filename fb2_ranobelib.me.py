@@ -12,6 +12,7 @@ body = "https://ranobelib.me/tianguan-cifu"
 tom = 5
 glava = 199
 url = f"{body}/v{tom}/c{glava}"
+
 #Название новеллы
 response = requests.get(url, headers=headers)
 soup = BeautifulSoup(response.content, "html.parser")
@@ -20,6 +21,7 @@ output_file_name = target_div.text
 illegal_chars = r'[\\/:\*\?"<>\|]'
 output_file_name = re.sub(illegal_chars, '_', output_file_name)
 paragraphs = soup.find_all("p")
+
 #Сколько глав(Номер последней главы тома  минус номер первой главы тома плюс 1)
 rang = 54
 text = ''
@@ -54,10 +56,9 @@ with open('text.txt', 'a', encoding='utf-8') as f:
 with open('text.txt', 'r', encoding='utf-8') as input_file:
     text = input_file.read()
 
-# Разделяем текст на главы
 chapter_texts = re.split(r'Глава \d+', text)[1:]
 
-# Создаем объект книги и добавляем главы
+
 book = FictionBook2()
 book.titleInfo.title = f"{output_file_name}_Том{tom}"
 book.titleInfo.authors = [Author(firstName="FALN", lastName="LNDZ")]
@@ -67,7 +68,7 @@ for i, chapter_text in enumerate(chapter_texts):
     book.chapters.append((chapter_title, [chapter_text]))
     glava += 1
 
-# Сохраняем книгу в формате fb2
+
 book.write(f"{output_file_name}_Том{tom}.fb2")
 print(f'Текст сохранен в файл fb2')
 os.remove("text.txt")
