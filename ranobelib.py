@@ -30,7 +30,7 @@ illegal_chars = r'[\\/:\*\?"<>\|]'
 output_file_name = re.sub(illegal_chars, '_', output_file_name)
 paragraphs = soup.find_all("p")
 
-
+#PARSE
 for i in range(1):
     with open(f'Глава {chapter_number}_{output_file_name}.txt', "w", encoding="utf-8") as file:
         url = url
@@ -56,8 +56,8 @@ for i in range(1):
         print(f'Текст главы {chapter_number} сохранен в файл {output_file_name}.txt')
         chapter_number += 1
 
+        
 #STRESSED
-
     def load():
         with open(file="lemmas.dat", mode='rb') as f:
             lemmas = pickle.loads(f.read())
@@ -240,8 +240,6 @@ for i in range(1):
     os.startfile("plus_text.txt")
     if input("Требуется проверка текста, все ли хорошо? Y/y") == 'y' or 'Y':
         pass
-
-
 
 
 #VOICE BLOCK
