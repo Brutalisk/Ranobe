@@ -12,13 +12,12 @@ import spacy
 import pickle
 
 #python -m spacy download ru_core_news_sm
-
 ru_nlp = spacy.load('ru_core_news_sm')
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
 tom_number = 2
-chapter_number = 2
+chapter_number = 5
 
 url = f"https://ranobelib.me/mushoku-tensei/v{tom_number}/c{chapter_number}"
 
@@ -32,7 +31,7 @@ paragraphs = soup.find_all("p")
 
 
 for i in range(1):
-    with open(f'Глава {chapter_number}_{output_file_name}.txt', "w", encoding="windows-1251") as file:
+    with open(f'Глава {chapter_number}_{output_file_name}.txt', "w", encoding="utf-8") as file:
         url = url
         response = requests.get(url, headers=headers)
         if response.status_code != 200:
@@ -45,19 +44,17 @@ for i in range(1):
                      'Внимание! Данный контент может содержать ненормативную лексику, сексуальные сцены откровенного характера, а также художественное изображение жестокости и насилия и ux cлoвecныe oпucaнuя, которые недоступны для просмотра лицам до 18 лет.'
                      not in p.text and
                      'Часть 1'not in p.text and 'Часть 2' not in p.text and 'Часть 3'not in p.text and 'Часть 4'not in p.text and 'Часть 5'not in p.text and 'Часть 6'not in p.text and 'Часть 7'not in p.text and 'Часть 8'not in p.text and 'Часть 9'not in p.text and 'Часть 10'not in p.text and 'Часть 11'not in p.text]
-
+        # Замена цифр на слова
         text_with_line_breaks = []
         for paragraph in text_list:
-            # Заменяем цифры на слова
             paragraph_with_words = re.sub(r'\d+', lambda match: num2words(int(match.group(0)), lang='ru'), paragraph)
-            # Добавляем перенос строки после каждой точки
             paragraph_with_line_breaks = re.sub(r'\.', '.\n', paragraph_with_words)
             text_with_line_breaks.append(paragraph_with_line_breaks)
 
         file.write('\n'.join(text_with_line_breaks))
         print(f'Текст главы {chapter_number} сохранен в файл {output_file_name}.txt')
         chapter_number += 1
-        
+
 #STRESSED
 
     def load():
@@ -200,7 +197,7 @@ for i in range(1):
     lemmas, wordforms = load()
     introduce_special_cases_from_dictionary(wordforms)
 
-    f = open(f'Глава {chapter_number-1}_{output_file_name}.txt', mode='r', encoding='windows-1251')
+    f = open(f'Глава {chapter_number-1}_{output_file_name}.txt', mode='r', encoding='utf-8')
     sentence = f.read()
     f.close()
 
@@ -211,6 +208,7 @@ for i in range(1):
     f.close()
 
 #FB2 BLOCK
+
     #with open(f'Глава {chapter_number-1}_{output_file_name}.txt', 'r', encoding='windows-1251') as input_file:
     #    text = input_file.read()
     #book = FictionBook2()
@@ -221,8 +219,7 @@ for i in range(1):
     #book.write(f"Глава {chapter_number-1}-{output_file_name}.fb2")
    # print(f'Текст главы {chapter_number-1} сохранен в файл {output_file_name}.fb2')
 
-#CONVERT MODE
-
+#CONVERT BLOCK
     with open("final.txt", "r", encoding="utf-8") as f:
         text = f.read()
     text = re.sub("([аеиоуыэюя])(́)", r"\1+", text)
@@ -314,7 +311,7 @@ for i in range(1):
 
         print(f"------------- Все {part} файлов записаны успешно -------------")
 
-    # объединение аудиофайлов в один
+    # объединение аудиофайлов
     if len(audio_files) > 0:
         with wave.open(audio_files[0], 'rb') as first_file:
             params = first_file.getparams()
