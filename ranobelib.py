@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-from FB2 import FictionBook2, Author
 import os
 import torch
 from transliterate import translit
@@ -12,10 +11,12 @@ import spacy
 import pickle
 
 #python -m spacy download ru_core_news_sm
+
 ru_nlp = spacy.load('ru_core_news_sm')
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
 }
+
 tom_number = 2
 chapter_number = 5
 
@@ -207,17 +208,6 @@ for i in range(1):
     f.write(res)
     f.close()
 
-#FB2 BLOCK
-
-    #with open(f'Глава {chapter_number-1}_{output_file_name}.txt', 'r', encoding='windows-1251') as input_file:
-    #    text = input_file.read()
-    #book = FictionBook2()
-    #book.titleInfo.title = f"{output_file_name}"
-    #book.titleInfo.authors = [Author(firstName="FALN", lastName="LNDZ")]
-    #book.titleInfo.genres = ["sf", "sf_fantasy"]
-    #book.chapters.append(("Глава 1", [text]))
-    #book.write(f"Глава {chapter_number-1}-{output_file_name}.fb2")
-   # print(f'Текст главы {chapter_number-1} сохранен в файл {output_file_name}.fb2')
 
 #CONVERT BLOCK
     with open("final.txt", "r", encoding="utf-8") as f:
