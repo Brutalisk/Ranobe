@@ -30,7 +30,7 @@ illegal_chars = r'[\\/:\*\?"<>\|]'
 output_file_name = re.sub(illegal_chars, '_', output_file_name)
 paragraphs = soup.find_all("p")
 
-#PARSE
+#ПАРС
 for i in range(1):
     with open(f'Глава {chapter_number}_{output_file_name}.txt', "w", encoding="utf-8") as file:
         url = url
@@ -57,7 +57,7 @@ for i in range(1):
         chapter_number += 1
 
         
-#STRESSED
+#УДАРЕНИЯ
     def load():
         with open(file="lemmas.dat", mode='rb') as f:
             lemmas = pickle.loads(f.read())
