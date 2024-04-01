@@ -209,7 +209,7 @@ for i in range(1):
     f.close()
 
 
-#CONVERT BLOCK
+#КОНВЕРТАЦИЯ
     with open("final.txt", "r", encoding="utf-8") as f:
         text = f.read()
     text = re.sub("([аеиоуыэюя])(́)", r"\1+", text)
@@ -242,7 +242,7 @@ for i in range(1):
         pass
 
 
-#VOICE BLOCK
+#ОЗВУЧКА
 
     device = torch.device('cpu')
     torch.set_num_threads(4)
